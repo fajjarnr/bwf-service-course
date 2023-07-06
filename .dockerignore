@@ -1,8 +1,15 @@
+# File
 .git
+.env
+.env.*
 .idea
-.vagrant
-.env.prod
-vendor
-storage/logs
-storage/cache
-Homestead.yaml
+.dockerignore
+composer.lock
+npm-debug.log
+
+# Direktori
+vendor/
+node_modules/
+public/storage/
+storage/
+bootstrap/cache/
