@@ -1,5 +1,9 @@
 .git
 .idea
+.vagrant
+.env
 .env.prod
+vendor
 storage/logs
 storage/cache
+Homestead.yaml

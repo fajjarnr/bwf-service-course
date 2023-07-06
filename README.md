@@ -1,5 +1,9 @@
 # API Service Course for Buildwith Fajar
 
+- reference
+
+<https://learnk8s.io/blog/kubernetes-deploy-laravel-the-easy-way>
+
 - copy .env.example to .env
 
 - build image laravel

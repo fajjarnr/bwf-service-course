@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-service-course
+  namespace: bwf
+spec:
+  selector:
+    matchLabels:
+      app: nginx-service-course
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-service-course
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            # - name: dir
+            #   mountPath: /var/www/web/public
+            - name: config
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        # - name: dir
+        #   hostPath:
+        #     path: /var/www/web/public
+        - name: config
+          configMap:
+            name: nginx-config
+            items:
+              - key: config
+                path: default.conf

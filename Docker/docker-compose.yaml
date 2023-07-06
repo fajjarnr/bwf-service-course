@@ -1,0 +1,66 @@
+version: '3.9'
+services:
+  app:
+    # build:
+    #   context: .
+    image: fajjarnr/bwf-service-course
+    container_name: bwf-service-course
+    environment:
+      - APP_NAME=service_course
+      - APP_KEY=base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
+      - DB_CONNECTION=mysql
+      - DB_HOST=bwf-micro.cyh0sfq8vv2a.ap-southeast-3.rds.amazonaws.com
+      - DB_PORT=3306
+      - DB_DATABASE=service_course
+      - DB_USERNAME=admin
+      - DB_PASSWORD=rahasia123
+      - SERVICE_USER_URL=bwf-service-user
+      - SERVICE_ORDER_PAYMENT_URL=bwf-service-payment
+    restart: always
+    tty: true
+    ports:
+      - 8080:80
+    networks:
+      - service-course-network
+  web_server:
+    build:
+      context: .
+      dockerfile: Docker/dockerfile/nginx.Dockerfile
+    image: fajjarnr/nginx-service-course
+    container_name: nginx-service-course
+    restart: always
+    tty: true
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+    networks:
+      - service-course-network
+  mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=service_course
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=rahasia
+    volumes:
+      - service-course-data:/var/lib/mysql
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - 8081:8080
+    depends_on:
+      - mysql
+    restart: always
+    networks:
+      - service-course-network
+
+networks:
+  service-course-network:
+
+volumes:
+  service-course-data:
+    driver: local
