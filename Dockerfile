@@ -11,8 +11,7 @@ RUN sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf
 EXPOSE 8080
 COPY --from=build /app /app
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+RUN mkdir -p /app/storage/logs
 RUN chown -R www-data:www-data /app
 RUN chown -R www-data:www-data /app/storage
 RUN chown -R www-data:www-data /app/bootstrap/cache
-RUN mkdir -p /app/storage/logs
-RUN chown -R www-data:www-data /app/storage/logs
