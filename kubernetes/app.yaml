@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-config
+  namespace: bwf
+data:
+  .env: |
+    APP_NAME=service_course
+    APP_KEY=base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
+    APP_URL=bwf-service-course.haha.svc.cluster.local
+    DB_CONNECTION=mysql
+    DB_HOSTNAME=bwf-micro.cyh0sfq8vv2a.ap-southeast-3.rds.amazonaws.com
+    DB_PORT=3306
+    DB_NAME=service_course
+    DB_USERNAME=admin
+    DB_PASSWORD=rahasia12
+    SERVICE_USER_URL=bwf-service-user
+    SERVICE_ORDER_PAYMENT_URL=bwf-service-payment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bwf-service-course
+  namespace: bwf
+spec:
+  selector:
+    matchLabels:
+      app: bwf-service-course
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bwf-service-course
+    spec:
+      containers:
+        - name: bwf-service-course
+          image: fajjarnr/bwf-micro-backend:service-course
+          envFrom:
+            - configMapRef:
+                name: env-config
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bwf-service-course
+  namespace: bwf
+spec:
+  selector:
+    app: bwf-service-course
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

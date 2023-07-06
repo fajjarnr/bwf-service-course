@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bwf-service-course
+  namespace: bwf
+spec:
+  selector:
+    matchLabels:
+      app: bwf-service-course
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bwf-service-course
+    spec:
+      containers:
+        - name: bwf-service-course
+          image: fajjarnr/bwf-micro-backend:service-course
+          envFrom:
+            - configMapRef:
+                name: env-config
+          ports:
+            - containerPort: 8080
