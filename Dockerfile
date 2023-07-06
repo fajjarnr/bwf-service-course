@@ -12,6 +12,9 @@ EXPOSE 8080
 COPY --from=build /app /app
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN mkdir -p /app/storage/logs
-RUN chown -R www-data:www-data /app
-RUN chown -R www-data:www-data /app/storage
+RUN chmod -R 775 /app/storage/logs
+RUN chown -R www-data:www-data /app/storage/logs
+
+RUN mkdir -p /app/bootstrap/cache
+RUN chmod -R 775 /app/bootstrap/cache
 RUN chown -R www-data:www-data /app/bootstrap/cache
