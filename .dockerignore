@@ -1,7 +1,6 @@
 .git
 .idea
 .vagrant
-.env
 .env.prod
 vendor
 storage/logs

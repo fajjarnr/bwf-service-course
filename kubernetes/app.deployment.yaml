@@ -15,19 +15,27 @@ spec:
     spec:
       containers:
         - name: bwf-service-course
-          image: fajjarnr/bwf-service-course
-          enviroment:
-            - DB_CONNECTION: mysql
-            - DB_HOSTNAME: bwf-micro.cyh0sfq8vv2a.ap-southeast-3.rds.amazonaws.com
-            - DB_PORT: 3306
-            - DB_NAME: service_course
-            - DB_USERNAME: admin
-            - DB_PASSWORD: rahasia12
-            - SERVICE_USER_URL: bwf-service-user
-            - SERVICE_ORDER_PAYMENT_URL: bwf-service-payment
+          image: fajjarnr/bwf-micro-backend:service-course
+          env:
+            - name: APP_NAME
+              value: service_course
+            - name: APP_KEY
+              value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
+            - name: DB_CONNECTION
+              value: mysql
+            - name: DB_HOSTNAME
+              value: bwf-micro.cyh0sfq8vv2a.ap-southeast-3.rds.amazonaws.com
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: service_course
+            - name: DB_USERNAME
+              value: admin
+            - name: DB_PASSWORD
+              value: rahasia12
+            - name: SERVICE_USER_URL
+              value: bwf-service-user
+            - name: SERVICE_ORDER_PAYMENT_URL
+              value: bwf-service-payment
           ports:
-            - containerPort: 9000
-        - name: nginx
-          image: fajjarnr/bwf-service-course
-          ports:
-            - containerPort: 80
+            - containerPort: 8080

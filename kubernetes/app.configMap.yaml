@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-config
+  namespace: bwf
+data:
+  .env: |
+    APP_NAME=service_course
+    APP_KEY=base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
+    DB_CONNECTION=mysql
+    DB_HOSTNAME=bwf-micro.cyh0sfq8vv2a.ap-southeast-3.rds.amazonaws.com
+    DB_PORT=3306
+    DB_NAME=service_course
+    DB_USERNAME=admin
+    DB_PASSWORD=rahasia12
+    SERVICE_USER_URL=bwf-service-user
+    SERVICE_ORDER_PAYMENT_URL=bwf-service-payment

@@ -1,11 +1,12 @@
 version: '3.9'
 services:
   app:
-    image: fajjarnr/bwf-service-course
+    image: fajjarnr/bwf-micro-backend:service-course
     container_name: bwf-service-course
     environment:
       - APP_NAME=service_course
       - APP_KEY=base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
+      - APP_URL=http://bwf-service-course:8080
       - DB_CONNECTION=mysql
       - DB_HOST=bwf-micro.cyh0sfq8vv2a.ap-southeast-3.rds.amazonaws.com
       - DB_PORT=3306
@@ -17,7 +18,7 @@ services:
     restart: always
     tty: true
     ports:
-      - 8080:80
+      - 8080:8080
     networks:
       - service-course-network
 
