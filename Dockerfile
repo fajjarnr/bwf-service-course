@@ -14,14 +14,5 @@ COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN chown -R www-data:www-data /app
 RUN chown -R www-data:www-data /app/storage
 RUN chown -R www-data:www-data /app/bootstrap/cache
-
-# Menambahkan langkah untuk membuat direktori /app/storage/logs
 RUN mkdir -p /app/storage/logs
 RUN chown -R www-data:www-data /app/storage/logs
-
-# Menjalankan perintah php artisan key:generate dengan pengguna www-data
-USER www-data
-RUN php artisan key:generate
-
-# Kembali ke pengguna root
-USER root
