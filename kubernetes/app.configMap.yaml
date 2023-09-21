@@ -5,9 +5,7 @@ metadata:
   namespace: bwf
 data:
   APP_NAME: "service_course"
-  APP_ENV: "local"
   APP_KEY: "base64:6zrLF/wEs3hO4AlX+BReJ803ec4zR//FWEOz6ZSgYuw="
-  APP_DEBUG: "true"
   APP_URL: http://bwf-service-course
 
   LOG_CHANNEL: stack

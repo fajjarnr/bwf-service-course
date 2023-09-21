@@ -9,7 +9,9 @@
 - build image laravel
 
 ```sh
-docker build -t fajjarnr/bwf-service-user .
+docker build -t fajjarnr/bwf-service-course .
+
+docker push fajjarnr/bwf-service-course
 ```
 
 - build image nginx
