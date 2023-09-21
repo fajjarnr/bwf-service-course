@@ -4,7 +4,7 @@
 
 <https://learnk8s.io/blog/kubernetes-deploy-laravel-the-easy-way>
 
-- copy .env.example to .env
+# Docker
 
 - build image laravel
 
@@ -32,4 +32,20 @@ docker-compose up -d
 docker exec -it bwf-service-course bash
 php artisan migrate
 exit
+```
+
+# Openshift
+
+```sh
+mysql -u root -p
+
+create database service_course
+```
+
+```sh
+php artisan migrate
+```
+
+```sh
+oc create route edge --service=bwf-service-course bwf-service-course --hostname bwf-service-course.apps.fajar-project.site
 ```
