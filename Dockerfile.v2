@@ -1,0 +1,43 @@
+# Gunakan image Ubuntu sebagai dasar
+FROM ubuntu
+
+# Tambahkan user "jay" yang akan menjalankan aplikasi
+RUN useradd -m -s /bin/bash jay
+
+# Buat direktori untuk aplikasi Laravel Anda
+WORKDIR /app
+
+# Salin aplikasi Laravel ke dalam container
+COPY . /app
+
+RUN chown -R jay:jay /app/storage && \
+    chown -R jay:jay /app/bootstrap/cache
+
+# Instal Apache dan PHP modul yang diperlukan
+RUN apt-get update && \
+    apt-get install -y apache2 libapache2-mod-php8.0 && \
+    apt-get install -y curl zip unzip git
+
+# Aktifkan modul Apache yang diperlukan untuk Laravel
+RUN a2enmod rewrite
+
+RUN sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf
+
+# Konfigurasi virtual host untuk Laravel
+COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Instal Composer (manajer dependensi PHP)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Instal dependensi aplikasi Laravel menggunakan Composer
+RUN composer update --no-interaction --no-scripts
+RUN composer install --no-interaction --no-scripts
+
+# Ekspor port 8080 yang akan digunakan oleh Apache
+EXPOSE 8080
+
+# Beralih ke user "jay"
+USER jay
+
+# Jalankan Apache sebagai proses utama
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

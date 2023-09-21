@@ -11,5 +11,3 @@ npm-debug.log
 vendor/
 node_modules/
 public/storage/
-storage/
-bootstrap/cache/

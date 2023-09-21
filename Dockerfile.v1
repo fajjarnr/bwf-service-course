@@ -1,0 +1,38 @@
+# Gunakan image Ubuntu sebagai dasar
+FROM ubuntu
+
+# Tambahkan user "jay" yang akan menjalankan aplikasi
+RUN useradd -m -s /bin/bash jay
+
+# Buat direktori untuk aplikasi Laravel Anda
+WORKDIR /app
+
+# Salin aplikasi Laravel ke dalam container
+COPY . /app
+
+RUN chown -R jay:jay /app/storage && \
+    chown -R jay:jay /app/bootstrap/cache
+
+# Instal dependensi yang diperlukan
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update && \
+    apt-get install -y php8.0 php8.0-cli php8.0-fpm php8.0-common php8.0-mysql php8.0-zip php8.0-gd php8.0-mbstring php8.0-curl php8.0-xml php8.0-bcmath && \
+    apt-get install -y curl zip unzip git
+
+# Instal Composer (manajer dependensi PHP)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Instal dependensi aplikasi Laravel menggunakan Composer
+RUN composer update --no-interaction --no-scripts
+RUN composer install --no-interaction --no-scripts
+
+# Ekspor port yang akan digunakan oleh aplikasi Anda
+EXPOSE 8080
+
+# Beralih ke user "jay"
+USER jay
+
+# Jalankan aplikasi Laravel Anda
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
