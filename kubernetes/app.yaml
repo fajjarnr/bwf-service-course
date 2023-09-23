@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: env-config
+  name: env-service-course
   namespace: bwf
 data:
   APP_NAME: "service_course"
@@ -46,7 +46,7 @@ spec:
             - containerPort: 8080
           envFrom:
             - configMapRef:
-                name: env-config
+                name: env-service-course
 
 ---
 apiVersion: v1
